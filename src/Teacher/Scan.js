@@ -8,7 +8,7 @@ export default function Scan() {
   const [template, setTemplate] = useState(null);
   const [file, setFile] = useState(null);
   const [showForm, setShowForm] = useState(false)
-  const [image, setImage] = useState(null)
+
   const [tmQuestion, setTmQuestion] = useState([])
   const [questiondetails, setQuestiondetails] = useState({});
 
@@ -18,12 +18,16 @@ export default function Scan() {
 
 
   const onDrop = useCallback(async (acceptedFiles) => {
-    setImage(acceptedFiles[0])
+    if (!template) {
+      alert('Please Select the template')
+      return
+    }
     const reader = new FileReader();
     reader.readAsDataURL(acceptedFiles[0]);
     reader.onload = () => {
       setFile(reader.result);
     };
+
     const formData = new FormData();
     formData.append("template_image", acceptedFiles[0]);
     formData.append("token", 12345);

@@ -2,7 +2,6 @@ import React from 'react'
 
 
 export default function Questions({ questionDetails, tmQuestion }) {
-    console.log(tmQuestion, "questionDetails")
     const arr = ["A", "B", "C", "D"]
 
     return (
@@ -56,7 +55,6 @@ export default function Questions({ questionDetails, tmQuestion }) {
                                     <select
                                         className="select-scan"
                                         name="Questions"
-                                    // onChange={onChangeAssign}
                                     >
                                         <option value={100}> {items.answer_select}</option>
                                         {arr.map((item) => {
