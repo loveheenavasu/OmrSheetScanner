@@ -4,7 +4,7 @@ import './css/bootstrap.min.css';
 import logo from "./logo.png";
 export default function Header() {
   return (
-    <header>
+    <header style={{height:"90px"}}>
     <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div className="navbar-header">
 

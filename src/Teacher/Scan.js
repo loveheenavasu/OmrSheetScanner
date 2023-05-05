@@ -4,19 +4,34 @@ import Header from './Header'
 import './css/Scan.css'
 import Questions from './Questions'
 import { useDropzone } from 'react-dropzone';
+import "./Pintura/pintura.css";
+import { openDefaultEditor } from "./Pintura/pintura";
+
 export default function Scan() {
   const [template, setTemplate] = useState(null);
   const [file, setFile] = useState(null);
   const [showForm, setShowForm] = useState(false)
-
   const [tmQuestion, setTmQuestion] = useState([])
   const [questiondetails, setQuestiondetails] = useState({});
-
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
   }
-
-
+  const editImage = (image, done) => {
+    const imageFile = image.pintura ? image.pintura.file : image;
+    const imageState = image.pintura ? image.pintura.data : {};
+    const editor = openDefaultEditor({
+      src: imageFile,
+      imageState
+    });
+    editor.on("close", (data) => {
+    });
+    editor.on("process", ({ dest, imageState }) => {
+      Object.assign(dest, {
+        pintura: { file: imageFile, data: imageState }
+      });
+      done(dest);
+    });
+  };
   const onDrop = useCallback(async (acceptedFiles) => {
     if (!template) {
       alert('Please Select the template')
@@ -27,37 +42,36 @@ export default function Scan() {
     reader.onload = () => {
       setFile(reader.result);
     };
+  }, [template]);
 
+  const postData = async (pic) => {
     const formData = new FormData();
-    formData.append("template_image", acceptedFiles[0]);
+    formData.append("template_image", pic);
     formData.append("token", 12345);
     formData.append("template_id", template);
-
     try {
       const response = await fetch("https://dev.zestgeek.com/OMRScanning/public/api/image-upload", {
         method: "POST",
         body: formData
       })
       const data = response.json()
-
       data.then((res) => {
+        if (res?.data) setShowForm(true)
         setTmQuestion(res?.data?.tm_question)
         setQuestiondetails(res?.data?.tm_schoolhomework)
-        setShowForm(true)
       })
-
       setShowForm(true);
     } catch (error) {
       console.error(error);
     }
-  }, [template]);
-
+  }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: 'image/*',
     multiple: false,
     onDrop,
   });
+
   return (
     <div class="container-wrapper">
       <Header />
@@ -70,7 +84,7 @@ export default function Scan() {
         <section
           className="custom-wrapper"
           style={{
-            marginTop: "122px",
+            // marginTop: "122px",
             display: "flex",
             flexDirection: "column",
             height: '100%'
@@ -83,7 +97,6 @@ export default function Scan() {
             style={{
               display: "flex",
               gap: "40px",
-              maxHeight: "190px",
               marginLeft: "20px",
               marginTop: "25px",
               flexWrap: 'wrap'
@@ -98,7 +111,6 @@ export default function Scan() {
               <select
                 className="select-scan"
                 name="assignment"
-
               >
                 <option value={100}>test assignment-1 </option>
                 <option value={101}>test assignment-2 </option>
@@ -110,9 +122,7 @@ export default function Scan() {
               <label style={{ margin: "0px" }}>Student:</label>
               <select
                 className="select-scan"
-                name="student"
-
-              >
+                name="student" >
                 <option value={200}>Student-1 </option>
                 <option value={201}>Student-2 </option>
                 <option value={202}>Student-3 </option>
@@ -124,8 +134,7 @@ export default function Scan() {
               <select
                 className="select-scan"
                 name="template"
-                onChange={onChangeTemplate}
-              >
+                onChange={onChangeTemplate} >
                 {!template && <option >Select Template </option>}
                 <option value={1}>Template-1 </option>
                 <option value={2}>Template-2 </option>
@@ -142,30 +151,33 @@ export default function Scan() {
               })} />
               <p>Click to scan a file</p>
             </div>}
-            {file ? (
-              <div className="img-container" >
+            {
+              file ? <div className="img-container" >
                 <img src={file} alt="Selected file" />
-                <div
-                  onClick={() => setFile(null)}
-                  className="cross-image" >&times;</div>
-
-              </div>
-            ) : null
+                <button style={{ textAlign: "right", display: "block", margin: "16px" }}
+                  onClick={() =>
+                    editImage(file, (output) => {
+                      postData(output)
+                      console.log("No Taskn done", output)
+                      setFile(URL.createObjectURL(output))
+                    })
+                  }
+                >
+                  Edit
+                </button>
+              </div> : null
             }
+
           </div>
+
           <div style={{
             display: 'flex',
             justifyContent: 'center'
           }} >
             {showForm && <Questions questionDetails={questiondetails} tmQuestion={tmQuestion} />}
-
           </div>
-
         </section>
-
       </div>
-
     </div>
-
   );
 }
