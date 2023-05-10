@@ -30,8 +30,9 @@
 }
 .img-container {
   /* width: 20%; */
-  height: 400px;
+  height: 200px;
   border: 1px solid #ccc;
+  position: relative;
   /* position: relative; */
   /* overflow: hidden; */
   /* width: 100%; */
@@ -59,8 +60,91 @@
   margin-top: 20px;
 }
 .form-container {
-  width: 29%;
+  /* width: 33%; */
   border: 1px solid;
   padding: 8px;
-  margin-top: 16px
+  margin-top: 3%;
+  padding: 0 5%;
+}
+.scanner{
+  margin-left: 40px;
+}
+@media (min-width: 360px) and (max-width: 540px) {
+  .scanner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 !important;
+  }
+  .right-cls{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:0 !important;
+    margin:0 !important;
+    flex-wrap: nowrap;
+
+  }
+  .EditImg{
+    height: 500px !important;
+    width: 100%;
+  }
+  .Edit{
+    border: none;
+    padding: 4px 19px;
+    border-radius: 10px;
+    background-color: #949090cc;
+    color: white;
+    margin: 16px 5px !important;
+  }
+  .EditMain{
+    justify-content: end;
+  }
+  .EditImgMain{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .Questions{
+    margin-top: 43%;
+    justify-content: unset !important;
+    width: 100%;
+  }
+  .form-container{
+    width: unset !important;
+    margin-top: 40% !important;
+  }
+  .navbar-nav{
+    margin: 0 !important;
+  }
+  
+}
+@media (min-width: 520px) and (max-width: 540px) {
+  .Questions{
+    justify-content: center !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 912px) {
+.right-cls{
+  margin-left: 0 !important;
+    margin-top: 0 !important;
+    flex-wrap: nowrap !important;
+    gap:20px !important;
+    justify-content: center;
+}
+.select-scan{
+  width: 153px;
+}
+}
+
+.clearbutton{
+  position: absolute;
+ 
+  top: -14px;
+  right: -7px;
+  background-color: none;
+
+  font-weight: 700;
+  font-size: 11px;
 }

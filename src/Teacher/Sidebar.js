@@ -6,7 +6,7 @@ export default function Sidebar() {
     <li class="nav-header">
       <span>Manage scan </span>
     </li>
-    <li>
+    <li className='scan'>
      scan
     </li>
 

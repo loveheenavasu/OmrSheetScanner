@@ -8,7 +8,7 @@ export default function Header() {
     <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div className="navbar-header">
 
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex" }} className="header-logo" >
             
               <img src={logo} />
       </div>     

@@ -4,18 +4,21 @@ import React from 'react'
 export default function Questions({ questionDetails, tmQuestion }) {
     const arr = ["A", "B", "C", "D"]
 
-    return (
 
-        <div className='form-container'>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px" }}>
-                <h3> AssignmentId :{questionDetails?.assignment_id}</h3>
-                <h3> StudentId :{questionDetails?.student_id}</h3>
+    return (
+        <>
+        { tmQuestion.length>0 && <div className='form-container'>
+     
+           <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px" }}>
+            <h3>AssignmentId: {questionDetails.assignment_id}</h3>
+         <h3>StudentId: {questionDetails.student_id}</h3>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
+
                 <div style={{
                     display: "grid",
                     gridTemplateColumns: "repeat(2, 1fr)",
-                    gridGap: "50px",
+                    gridGap: "36px",
                 }}>
                     {tmQuestion?.map((items) => (
                         <div key={items.TM_QN_Id} style={{
@@ -24,7 +27,7 @@ export default function Questions({ questionDetails, tmQuestion }) {
                         }}>
                             <label style={{ margin: "0px" }}>Question: {items.TM_QN_Id}</label>
                             <select className="select-scan" name="Questions">
-                                <option value={100}> {items.answer_select}</option>
+                                {/* <option value={100}> {items.answer_select}</option> */}
                                 {arr.map((item) => {
                                     if (item !== items.answer_select) {
                                         return (
@@ -38,6 +41,7 @@ export default function Questions({ questionDetails, tmQuestion }) {
                     ))}
                 </div>
             </div>
-        </div>
+        </div>}
+        </>
     )
 }

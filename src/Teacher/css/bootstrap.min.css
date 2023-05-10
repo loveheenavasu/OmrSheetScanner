@@ -5095,6 +5095,20 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 
+@media (min-width: 360px) and (max-width: 500px) {
+  .navbar-header .header-logo{
+    margin-left: 4%;
+  }
+  .nav-header span{
+    margin-left: 4%;
+
+  }
+  .side-nav .scan{
+    margin-left: 4%;
+
+  }
+}
+
 .navbar-collapse {
   padding-right: 15px;
   padding-left: 15px;
