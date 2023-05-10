@@ -156,10 +156,10 @@ export default function Scan() {
                 display: "flex",
                 flexDirection: "column",
               }}
-              className="Assignment"
+              className="Assignment  Assignment-2"
             >
               <label style={{ margin: "0px" }}> Assignment:</label>
-              <select className="select-scan" name="assignment">
+              <select className="select-scan select-scan-2" name="assignment">
                 <option value={100}>test assignment-1 </option>
                 <option value={101}>test assignment-2 </option>
                 <option value={102}>test assignment-3 </option>
@@ -168,7 +168,7 @@ export default function Scan() {
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <label style={{ margin: "0px" }}>Student:</label>
-              <select className="select-scan" name="student">
+              <select className="select-scan select-scan-2" name="student">
                 <option value={200}>Student-1 </option>
                 <option value={201}>Student-2 </option>
                 <option value={202}>Student-3 </option>
@@ -178,7 +178,7 @@ export default function Scan() {
             <div style={{ display: "flex", flexDirection: "column" }}>
               <label style={{ margin: "0px" }}>Template:</label>
               <select
-                className="select-scan"
+                className="select-scan select-scan-2"
                 name="template"
                 onChange={onChangeTemplate}
               >

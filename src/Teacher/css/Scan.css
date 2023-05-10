@@ -86,7 +86,7 @@
 
   }
   .EditImg{
-    height: 500px !important;
+    height: 200px !important;
     width: 100%;
   }
   .Edit{
@@ -106,16 +106,28 @@
     justify-content: center;
   }
   .Questions{
-    margin-top: 43%;
-    justify-content: unset !important;
     width: 100%;
   }
-  .form-container{
-    width: unset !important;
-    margin-top: 40% !important;
+  .form-container {
+    margin-top: 30px;
   }
   .navbar-nav{
     margin: 0 !important;
+  }
+  /* .select-scan{
+    width: 90vw !important;
+  } */
+  .custom-wrapper .right-cls{
+    padding: 15px !important ;
+  }
+  .select-scan-2{
+  width:  90vw;
+  }
+  .select-scan-question{
+    width: 140px;
+  }
+  .que-heading{
+    font-size: 20px;
   }
   
 }
