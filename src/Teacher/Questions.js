@@ -10,8 +10,8 @@ export default function Questions({ questionDetails, tmQuestion }) {
         { tmQuestion.length>0 && <div className='form-container'>
      
            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px" }}>
-            <h3 className='que-heading'>AssignmentId: {questionDetails.assignment_id}</h3>
-         <h3 className='que-heading'>StudentId: {questionDetails.student_id}</h3>
+            <h3 className='que-heading assigmentHeading'>Assignment Id: {questionDetails.assignment_id}</h3>
+         <h3 className='que-heading assigmentHeading'>Student Id: {questionDetails.student_id}</h3>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
 
@@ -25,7 +25,7 @@ export default function Questions({ questionDetails, tmQuestion }) {
                             display: "flex",
                             flexDirection: "column",
                         }}>
-                            <label style={{ margin: "0px" }}>Question: {items.TM_QN_Id}</label>
+                            <label style={{ margin: "0px" }} className="assigmentHeading">Question: {items.TM_QN_Id}</label>
                             <select className="select-scan select-scan-question" name="Questions">
                                 <option value={100}> {items.answer_select}</option>
                                 {arr.map((item) => {

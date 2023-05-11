@@ -1,8 +1,9 @@
 /* To center the spinner*/
 .pos-center {
-    position: fixed;
-    top: calc(50% - 40px);
-    left: calc(50% - 40px);
+    position: absolute;
+    top: calc(50% - 30px);
+    left: calc(50% - 24px);
+
   }
   
   .loader {

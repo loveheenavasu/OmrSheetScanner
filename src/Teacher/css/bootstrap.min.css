@@ -3,6 +3,8 @@
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */ /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -3245,6 +3247,7 @@ label {
   color: #333;
   margin-bottom: 10px;
   font-family: unset;
+  padding: 5px 0;
 }
 
 input[type="search"] {
@@ -5082,6 +5085,10 @@ textarea.input-group-sm > .input-group-btn > .btn {
   min-height: 50px;
   margin-bottom: 20px;
 }
+.scan{
+  font-family: 'Poppins', sans-serif;
+
+}
 
 @media (min-width: 768px) {
   .navbar {
@@ -5095,7 +5102,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 
-@media (min-width: 360px) and (max-width: 500px) {
+@media (min-width: 360px) and (max-width: 540px) {
   .navbar-header .header-logo{
     margin-left: 4%;
   }
@@ -5108,6 +5115,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
   }
 }
+
 
 .navbar-collapse {
   padding-right: 15px;

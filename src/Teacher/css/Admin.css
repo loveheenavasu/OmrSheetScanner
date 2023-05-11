@@ -1266,10 +1266,19 @@ html {
 
 
 .select-scan {
-  width: 165px;
+  width: 200px;
   height: 45px;
   border-radius: 5px;
-  border: 1px solid #ced4da;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M16.5625 6.875L10 13.4375L3.4375 6.875L2.03125 8.28125L10 16.25L17.9688 8.28125L16.5625 6.875Z" fill="%23333"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 0.78em auto, 100%;
+  padding: 7px;
 }
 .button-scanner {
   background-color: orange;
