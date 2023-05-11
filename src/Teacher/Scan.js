@@ -120,7 +120,6 @@ console.log(respons,"reponse")
     setRespons(null)
   };
 
-
   return (
     <div class="container-wrapper">
       <Header />
@@ -285,7 +284,7 @@ console.log(respons,"reponse")
               />
             ) : (
                respons?.status == 500 &&  (
-                <p style={{ color: "red" }} className="errormsg">Error executing AI script</p>
+                <p style={{ color: "red" }} className="errormsg">{respons?.msg}</p>
               )
             )}
           </div>
