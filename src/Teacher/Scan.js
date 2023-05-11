@@ -139,7 +139,12 @@ export default function Scan() {
           }}
         >
           <div className="scanner">
-            <b style={{ fontSize: "27px", textAlign: "center" }} className="assigmentHeading">Scanner</b>
+            <b
+              style={{ fontSize: "27px", textAlign: "center" }}
+              className="assigmentHeading"
+            >
+              Scanner
+            </b>
           </div>
           <div
             style={{
@@ -158,25 +163,32 @@ export default function Scan() {
               }}
               className="Assignment  Assignment-2"
             >
-              <label style={{ margin: "0px" }} className="assigmentHeading"> Assignment:</label>
+              <label style={{ margin: "0px" }} className="assigmentHeading">
+                {" "}
+                Assignment:
+              </label>
               <select className="select-scan select-scan-2" name="assignment">
                 <option value={100}>test assignment-1 </option>
                 <option value={101}>test assignment-2 </option>
                 <option value={102}>test assignment-3 </option>
               </select>{" "}
-              <br /> 
+              <br />
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <label style={{ margin: "0px" }} className="assigmentHeading">Student:</label>
+              <label style={{ margin: "0px" }} className="assigmentHeading">
+                Student:
+              </label>
               <select className="select-scan select-scan-2" name="student">
                 <option value={200}>Student-1 </option>
                 <option value={201}>Student-2 </option>
                 <option value={202}>Student-3 </option>
               </select>{" "}
-              <br /> 
+              <br />
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <label style={{ margin: "0px" }} className="assigmentHeading">Template:</label>
+              <label style={{ margin: "0px" }} className="assigmentHeading">
+                Template:
+              </label>
               <select
                 className="select-scan select-scan-2"
                 name="template"
@@ -199,17 +211,29 @@ export default function Scan() {
             className="EditMain"
           >
             {file ? (
-            <div style={{position: "relative"}}>
-            <div className="img-container">
-              <button onClick={handleClear} className="clearbutton">X</button>
-              <img src={file} alt="Selected file" className={`EditImg ${loading && 'blurimg'}`} />
-            </div>
-            {loading && (
-              <div className="pos-center" style={{position: "absolute", zIndex: 1}}>
-                <Spinner />
+              <div style={{ position: "relative" }}>
+                <div className="img-container">
+                  <button
+                    onClick={handleClear}
+                    className={`clearbutton ${loading && "clearbutton2"}`}
+                  >
+                    X
+                  </button>
+                  <img
+                    src={file}
+                    alt="Selected file"
+                    className={`EditImg ${loading && "blurimg"}`}
+                  />
+                </div>
+                {loading && (
+                  <div
+                    className="pos-center"
+                    style={{ position: "absolute", zIndex: 1 }}
+                  >
+                    <Spinner />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
             ) : null}
           </div>
           <div className="upload-section">
@@ -248,7 +272,7 @@ export default function Scan() {
             }}
             className="Questions"
           >
-            {showForm && tmQuestion && questiondetails&& (
+            {showForm && tmQuestion && questiondetails && (
               <Questions
                 questionDetails={questiondetails}
                 tmQuestion={tmQuestion}

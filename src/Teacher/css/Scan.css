@@ -177,8 +177,10 @@
   background-color: #b8b5b5ad;
   border: 1px solid #808080b8;
   border-radius: 3px;
-  z-index: 9999999;
+}
 
+.clearbutton2{
+  z-index: 9999;
 }
 
 
