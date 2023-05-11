@@ -18,6 +18,7 @@ export default function Scan() {
   const [tmQuestion, setTmQuestion] = useState([]);
   const [questiondetails, setQuestiondetails] = useState({});
   const [loading, setLoading] = useState(false);
+  const [respons, setRespons]= useState(null)
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
   };
@@ -68,6 +69,8 @@ export default function Scan() {
           setTmQuestion(res?.data?.tm_question);
           setQuestiondetails(res?.data?.tm_schoolhomework);
           setLoading(false);
+          setRespons(res)
+
         });
         // setShowForm(true);
         setLoading(false);
@@ -77,7 +80,8 @@ export default function Scan() {
     },
     [template]
   );
-
+  
+console.log(respons,"reponse")
   const postData = async (pic) => {
     // const formData = new FormData();
     // formData.append("template_image", pic);
@@ -113,7 +117,9 @@ export default function Scan() {
     setFile(null);
     setQuestiondetails({});
     setTmQuestion([]);
+    setRespons(null)
   };
+
 
   return (
     <div class="container-wrapper">
@@ -272,11 +278,15 @@ export default function Scan() {
             }}
             className="Questions"
           >
-            {showForm && tmQuestion && questiondetails && (
+            {showForm && tmQuestion && questiondetails ? (
               <Questions
                 questionDetails={questiondetails}
                 tmQuestion={tmQuestion}
               />
+            ) : (
+               respons.status == 500 &&  (
+                <p style={{ color: "red" }}>Error executing AI script</p>
+              )
             )}
           </div>
         </section>
