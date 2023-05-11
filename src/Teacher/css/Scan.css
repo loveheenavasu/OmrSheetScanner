@@ -191,3 +191,6 @@
 .blurimg{
   opacity: 0.6;
 }
+.errormsg{
+  padding: 10px 0;
+}

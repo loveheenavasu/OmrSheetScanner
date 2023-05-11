@@ -284,8 +284,8 @@ console.log(respons,"reponse")
                 tmQuestion={tmQuestion}
               />
             ) : (
-               respons.status == 500 &&  (
-                <p style={{ color: "red" }}>Error executing AI script</p>
+               respons?.status == 500 &&  (
+                <p style={{ color: "red" }} className="errormsg">Error executing AI script</p>
               )
             )}
           </div>
