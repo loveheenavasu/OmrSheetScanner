@@ -1303,16 +1303,25 @@ html {
 }
 .submit button{
   /* background: #b0aeae; */
-  background-color: #b8b5b5ad;
-
-  color: white;
+  background-color: transparent;
+  color: gray;
   border: navajowhite;
   padding: 7px 34px;
   font-weight: 500;
   border-radius: 6px 0px 6px 0px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  transition: transform 0.7s linear; /* Define the duration and timing of the transition */
+
 }
 
+
+  .submit button:hover{
+    background-color: #edeaea;
+    color: gray;
+    transform: scale(0.98); /* Scale the button on hover */
+
+
+  }
 /* #list-learning-objectives
   .ant-table-content
   table

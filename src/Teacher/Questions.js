@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 
 export default function Questions({
   questionDetails,
@@ -7,20 +7,18 @@ export default function Questions({
 }) {
   const arr = ["A", "B", "C", "D"];
 
-
-  const handleOptionChange = (e, quetionId) => {
-    const newoption = e.target.value;
-    setTmQuestion((tmquestion) =>
-      tmquestion.map((prevque) => {
-        if (prevque.TM_QN_Id === quetionId) {
-          return { ...prevque, answer_select: newoption };
+  const handleOptionChange = (e, questionId) => {
+    const newAnswer = e.target.value;
+    setTmQuestion((prevque) =>
+      prevque.map((question) => {
+        if (question.TM_QN_Id === questionId) {
+          return { ...question, answer_select: newAnswer };
         } else {
-          return prevque;
+          return question;
         }
       })
     );
   };
-
 
   const submitQuestions = () => {
     console.log(tmQuestion, "tmQuestions");
@@ -94,7 +92,7 @@ export default function Questions({
       )}
       {tmQuestion.length > 0 && (
         <div className="submit">
-          <button onClick={submitQuestions} >Submit</button>
+          <button onClick={submitQuestions}>Submit</button>
         </div>
       )}
     </>

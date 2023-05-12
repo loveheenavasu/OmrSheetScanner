@@ -18,10 +18,12 @@ export default function Scan() {
   const [tmQuestion, setTmQuestion] = useState([]);
   const [questiondetails, setQuestiondetails] = useState({});
   const [loading, setLoading] = useState(false);
+  //  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
   const [respons, setRespons] = useState(null);
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
   };
+  const [isMobileDevice, setIsMobileDevice] = React.useState(false);
   const editImage = (image, done) => {
     const imageFile = image.pintura ? image.pintura.file : image;
     const imageState = image.pintura ? image.pintura.data : {};
@@ -107,13 +109,20 @@ export default function Scan() {
     // }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: {
-      "image/png": [".png", ".jpg", ".jpeg", ".svg"],
-    },
-    multiple: false,
-    onDrop,
-  });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone(
+    window?.innerWidth > 768
+      ? {
+          multiple: false,
+          onDrop,
+          accept: {
+            "image/png": [".png", ".jpg", ".jpeg", ".svg"],
+          },
+        }
+      : {
+          multiple: false,
+          onDrop,
+        }
+  );
   const handleClear = () => {
     setFile(null);
     setQuestiondetails({});
@@ -250,7 +259,11 @@ export default function Scan() {
                 {...getRootProps()}
               >
                 {/* <Puff type="ThreeDots" color="#00BFFF" height={80} width={80} /> */}
-                <input {...getInputProps()} />
+                <input
+                  {...getInputProps({
+                    capture: "environment",
+                  })}
+                />
                 <p>Click to scan a file</p>
               </div>
             )}
@@ -275,25 +288,28 @@ export default function Scan() {
             style={{
               display: "flex",
               justifyContent: "center",
-              flexDirection:'column',
-              alignItems: 'center'
+              flexDirection: "column",
+              alignItems: "center",
             }}
             className="Questions"
           >
-            {showForm && tmQuestion && questiondetails ? (
-              
+            {showForm && tmQuestion && questiondetails && (
               <Questions
                 questionDetails={questiondetails}
                 tmQuestion={tmQuestion}
                 setTmQuestion={setTmQuestion}
               />
-            ) : (
-              respons?.status == 500 && (
+            )}
+            {respons?.status == 500 && (
+              <p style={{ color: "red" }} className="errormsg">
+                {respons?.msg}
+              </p>
+            )}
+            {/* {  respons?.status == 500 && tmQuestion.length < 0 && (
                 <p style={{ color: "red" }} className="errormsg">
                   {respons?.msg}
                 </p>
-              )
-            )}
+              )} */}
           </div>
         </section>
       </div>
