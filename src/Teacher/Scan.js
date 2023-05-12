@@ -18,7 +18,7 @@ export default function Scan() {
   const [tmQuestion, setTmQuestion] = useState([]);
   const [questiondetails, setQuestiondetails] = useState({});
   const [loading, setLoading] = useState(false);
-  const [respons, setRespons]= useState(null)
+  const [respons, setRespons] = useState(null);
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
   };
@@ -69,8 +69,7 @@ export default function Scan() {
           setTmQuestion(res?.data?.tm_question);
           setQuestiondetails(res?.data?.tm_schoolhomework);
           setLoading(false);
-          setRespons(res)
-
+          setRespons(res);
         });
         // setShowForm(true);
         setLoading(false);
@@ -80,8 +79,8 @@ export default function Scan() {
     },
     [template]
   );
-  
-console.log(respons,"reponse")
+
+  // console.log(respons,"reponse")
   const postData = async (pic) => {
     // const formData = new FormData();
     // formData.append("template_image", pic);
@@ -109,7 +108,9 @@ console.log(respons,"reponse")
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: "image/*",
+    accept: {
+      "image/png": [".png", ".jpg", ".jpeg", ".svg"],
+    },
     multiple: false,
     onDrop,
   });
@@ -117,7 +118,7 @@ console.log(respons,"reponse")
     setFile(null);
     setQuestiondetails({});
     setTmQuestion([]);
-    setRespons(null)
+    setRespons(null);
   };
 
   return (
@@ -274,17 +275,23 @@ console.log(respons,"reponse")
             style={{
               display: "flex",
               justifyContent: "center",
+              flexDirection:'column',
+              alignItems: 'center'
             }}
             className="Questions"
           >
             {showForm && tmQuestion && questiondetails ? (
+              
               <Questions
                 questionDetails={questiondetails}
                 tmQuestion={tmQuestion}
+                setTmQuestion={setTmQuestion}
               />
             ) : (
-               respons?.status == 500 &&  (
-                <p style={{ color: "red" }} className="errormsg">{respons?.msg}</p>
+              respons?.status == 500 && (
+                <p style={{ color: "red" }} className="errormsg">
+                  {respons?.msg}
+                </p>
               )
             )}
           </div>
