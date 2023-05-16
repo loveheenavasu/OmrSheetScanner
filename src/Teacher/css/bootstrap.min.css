@@ -5115,6 +5115,18 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
   }
 }
+@media (min-width: 768px) and (max-width: 920px) {
+  .navbar-header .header-logo{
+    margin: 5px 0px 1px 10px;
+  }
+  .scanner {
+    text-align: center;
+    margin: 18px 0 0px 0;
+}
+
+}
+
+
 
 
 .navbar-collapse {

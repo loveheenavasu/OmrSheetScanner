@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import "./css/Scan.css";
@@ -6,39 +6,61 @@ import Questions from "./Questions";
 import { useDropzone } from "react-dropzone";
 import "./Pintura/pintura.css";
 import { openDefaultEditor } from "./Pintura/pintura";
-// import { Puff } from 'react-loader-spinner';
 import Spinner from "../Spinner";
 import "../Spinner.css";
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function Scan() {
-  const [template, setTemplate] = useState(null);
   const [file, setFile] = useState(null);
-  const [showForm, setShowForm] = useState(false);
+
   const [tmQuestion, setTmQuestion] = useState([]);
   const [questiondetails, setQuestiondetails] = useState({});
+  // console.log(tmQuestion, "tmQuestion");
   const [loading, setLoading] = useState(false);
-  //  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
   const [respons, setRespons] = useState(null);
+  const [template, setTemplate] = useState(null);
+  const [studentId, setStudentId] = useState(200);
+  const [assignmentId, setAssignmentId] = useState(100);
+  const [isIphone11, setIsIphone11] = useState(false);
+
+  useEffect(() => {
+    const { height, width } = window.screen;
+
+    // iPhone 11 has a screen size of 828x1792 in portrait mode
+    if (height === 896 && width === 414) {
+      setIsIphone11(true);
+    }
+  }, []);
+
+  // if (isIphone11) {
+  //   require('./css/iphone11.css');
+  // }
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
   };
-  const [isMobileDevice, setIsMobileDevice] = React.useState(false);
-  const editImage = (image, done) => {
-    const imageFile = image.pintura ? image.pintura.file : image;
-    const imageState = image.pintura ? image.pintura.data : {};
-    const editor = openDefaultEditor({
-      src: imageFile,
-      imageState,
-    });
-    editor.on("close", (data) => {});
-    editor.on("process", ({ dest, imageState }) => {
-      Object.assign(dest, {
-        pintura: { file: imageFile, data: imageState },
-      });
-      done(dest);
-    });
+  const onChangeStudent = (e) => {
+    setStudentId(e.target.value);
   };
+
+  const handleAssigmentChange = (e) => {
+    setAssignmentId(e.target.value);
+  };
+
+  // const editImage = (image, done) => {
+  //   const imageFile = image.pintura ? image.pintura.file : image;
+  //   const imageState = image.pintura ? image.pintura.data : {};
+  //   const editor = openDefaultEditor({
+  //     src: imageFile,
+  //     imageState,
+  //   });
+  //   editor.on("close", (data) => {});
+  //   editor.on("process", ({ dest, imageState }) => {
+  //     Object.assign(dest, {
+  //       pintura: { file: imageFile, data: imageState },
+  //     });
+  //     done(dest);
+  //   });
+  // };
+
   const onDrop = useCallback(
     async (acceptedFiles) => {
       if (!template) {
@@ -55,6 +77,8 @@ export default function Scan() {
       formData.append("template_image", acceptedFiles[0]);
       formData.append("token", "a99442d2a736365f5fe637e299b0e339");
       formData.append("template_id", template);
+      formData.append("student_id", studentId);
+      formData.append("assignment_id", assignmentId);
 
       try {
         setLoading(true);
@@ -65,24 +89,56 @@ export default function Scan() {
             body: formData,
           }
         );
-        const data = response.json();
-        data.then((res) => {
-          if (res?.data) setShowForm(true);
-          setTmQuestion(res?.data?.tm_question);
-          setQuestiondetails(res?.data?.tm_schoolhomework);
-          setLoading(false);
-          setRespons(res);
+        const data = await response.json();
+        const blob = new Blob([acceptedFiles[0]], {
+          type: acceptedFiles[0].type,
         });
-        // setShowForm(true);
+        const url = URL.createObjectURL(blob);
+
+        setFile(url);
+
+        setTmQuestion(data?.data?.tm_question);
+        setQuestiondetails(data?.data?.tm_schoolhomework);
         setLoading(false);
+        setRespons(data);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     },
-    [template]
+    [template, studentId, assignmentId]
   );
+  const handleSubmit = async () => {
+    if (respons?.status === 200) {
+      // Call the second API to save the result JSON
+      const updatedResponse = {
+        type: respons?.type,
+        data: {
+          tm_schoolhomework: respons?.data?.tm_schoolhomework,
+          tmQuestion,
+        },
+        tm_image: respons?.tm_image,
+      };
 
-  // console.log(respons,"reponse")
+      const secondApiResponse = await fetch(
+        "https://dev-app.tabbiemath.com/tabbiedevapi/public/api/scanapistore",
+        {
+          method: "POST",
+          body: JSON.stringify(updatedResponse),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const secondApiData = await secondApiResponse.json();
+      const { assignment_id, student_id, template_id } =
+        respons?.data?.tm_schoolhomework;
+
+      // Redirect to the website with the assignment_id, student_id, and template_id values
+      window.location.href = `https://dev-app.tabbiemath.com/scnapi/testjson.php?assignment_id=${assignment_id}&student_id=${student_id}&template_id=${template_id}`;
+    }
+  };
+
   const postData = async (pic) => {
     // const formData = new FormData();
     // formData.append("template_image", pic);
@@ -165,9 +221,9 @@ export default function Scan() {
             style={{
               display: "flex",
               gap: "40px",
-              marginLeft: "20px",
-              marginTop: "25px",
               flexWrap: "wrap",
+              justifyContent: "center",
+              margin: " 25px 0 25px 0",
             }}
             className="right-cls"
           >
@@ -182,7 +238,11 @@ export default function Scan() {
                 {" "}
                 Assignment:
               </label>
-              <select className="select-scan select-scan-2" name="assignment">
+              <select
+                className="select-scan select-scan-2"
+                name="assignment"
+                onChange={handleAssigmentChange}
+              >
                 <option value={100}>test assignment-1 </option>
                 <option value={101}>test assignment-2 </option>
                 <option value={102}>test assignment-3 </option>
@@ -193,7 +253,11 @@ export default function Scan() {
               <label style={{ margin: "0px" }} className="assigmentHeading">
                 Student:
               </label>
-              <select className="select-scan select-scan-2" name="student">
+              <select
+                className="select-scan select-scan-2"
+                name="student"
+                onChange={onChangeStudent}
+              >
                 <option value={200}>Student-1 </option>
                 <option value={201}>Student-2 </option>
                 <option value={202}>Student-3 </option>
@@ -213,7 +277,7 @@ export default function Scan() {
                 <option value={1}>Template-1 </option>
                 <option value={2}>Template-2 </option>
               </select>
-              <br /> <br />
+              <br />
             </div>
           </div>
           {/* {loading && (
@@ -226,8 +290,17 @@ export default function Scan() {
             className="EditMain"
           >
             {file ? (
-              <div style={{ position: "relative" }}>
-                <div className="img-container">
+              <div
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                className={`${isIphone11 && "iphonestyle"}`}
+              >
+                <div
+                  className={`img-container  ${isIphone11 && "img-container2"}`}
+                >
                   <button
                     onClick={handleClear}
                     className={`clearbutton ${loading && "clearbutton2"}`}
@@ -237,7 +310,9 @@ export default function Scan() {
                   <img
                     src={file}
                     alt="Selected file"
-                    className={`EditImg ${loading && "blurimg"}`}
+                    className={`EditImg ${loading && "blurimg"} ${
+                      isIphone11 && "Editimg2"
+                    }`}
                   />
                 </div>
                 {loading && (
@@ -293,12 +368,25 @@ export default function Scan() {
             }}
             className="Questions"
           >
-            {showForm && tmQuestion && questiondetails && (
-              <Questions
-                questionDetails={questiondetails}
-                tmQuestion={tmQuestion}
-                setTmQuestion={setTmQuestion}
-              />
+            {tmQuestion && questiondetails && (
+              <>
+                <Questions
+                  questionDetails={questiondetails}
+                  tmQuestion={tmQuestion}
+                  setTmQuestion={setTmQuestion}
+                />
+
+                {/* <div className="submit">
+                  <button onClick={handleSubmit} >Submit</button>
+                </div> */}
+              </>
+            )}
+            {tmQuestion.length > 0 && (
+              <div className="submit">
+                <button onClick={handleSubmit} className="bg-primary">
+                  Submit
+                </button>
+              </div>
             )}
             {respons?.status == 500 && (
               <p style={{ color: "red" }} className="errormsg">

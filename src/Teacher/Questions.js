@@ -20,9 +20,7 @@ export default function Questions({
     );
   };
 
-  const submitQuestions = () => {
-    console.log(tmQuestion, "tmQuestions");
-  };
+ 
 
   return (
     <>
@@ -42,7 +40,7 @@ export default function Questions({
               Student Id: {questionDetails.student_id}
             </h3>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <div
               style={{
                 display: "grid",
@@ -90,11 +88,11 @@ export default function Questions({
           </div>
         </div>
       )}
-      {tmQuestion.length > 0 && (
+      {/* {tmQuestion.length > 0 && (
         <div className="submit">
           <button onClick={submitQuestions}>Submit</button>
         </div>
-      )}
+      )} */}
     </>
   );
 }

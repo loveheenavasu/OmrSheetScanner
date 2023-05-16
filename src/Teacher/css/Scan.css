@@ -71,6 +71,8 @@
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;}
 .scanner {
   margin-left: 40px;
+  margin-top: 20px;
+  text-align: center;
 }
 @media (min-width: 360px) and (max-width: 540px) {
   .scanner {
@@ -88,7 +90,7 @@
     flex-wrap: nowrap;
   }
   .EditImg {
-    height: 200px !important;
+    height: 200px ;
     width: 100%;
   }
   .Edit {
@@ -135,7 +137,7 @@
     width: 140px;
   }
   .que-heading {
-    font-size: 17px;
+    font-size: 15px;
   }
   .file-uploader {
     width: 50%;
@@ -174,9 +176,21 @@
   background-color: none;
   font-weight: 700;
   font-size: 11px;
-  background-color: #b8b5b5ad;
-  border: 1px solid #808080b8;
+  /* background-color: #b8b5b5ad; */
+  /* border: 1px solid #808080b8; */
   border-radius: 3px;
+  background-color: #fff;
+  color: gray;
+  /* padding: 7px 34px; */
+  font-weight: 500;
+  /* border-radius: 6px 0px 6px 0px; */
+  border: none;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px
+}
+.clearbutton:hover{
+  background-color: #edeaea;
+  color: gray;
+  transform: scale(0.98); /* Scale the button on hover */
 }
 
 .clearbutton2{
@@ -193,4 +207,14 @@
 }
 .errormsg{
   padding: 10px 0;
+}
+/* style for iphone 11*/
+.iphonestyle{
+  width: 50%;
+}
+.Editimg2{
+  height: 100% !important;
+}
+.img-container2{
+  height: 300px;
 }
