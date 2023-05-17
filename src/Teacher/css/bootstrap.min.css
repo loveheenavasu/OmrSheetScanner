@@ -5026,6 +5026,10 @@ textarea.input-group-sm > .input-group-btn > .btn {
   top: auto;
   left: auto;
 }
+.navbar-header .header-logo{
+
+  margin: 6px 0px 0 8px;
+  }
 
 @media (min-width: 768px) {
   .nav-justified > li {
