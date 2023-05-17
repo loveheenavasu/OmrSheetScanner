@@ -1,10 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap'); */
 
 
 .upload-section {
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 254px;
+  /* padding: 0; */
+  padding: 25px;
+  /* border: 1px solid; */
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  padding: 19px 40px;
+
 }
 .upload-conatiner {
   width: 50rem;
@@ -16,7 +24,10 @@
   padding: 20px;
   text-align: center;
   cursor: pointer;
-  width: 37%;
+  width: 100%;
+  margin: 0px 0 12px 0;
+
+
 }
 
 .file-uploader.drag-active {
@@ -32,7 +43,7 @@
 }
 .img-container {
   /* width: 20%; */
-  height: 202px;
+  height: 250px;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
   position: relative;
   /* position: relative; */
@@ -90,7 +101,7 @@
     flex-wrap: nowrap;
   }
   .EditImg {
-    height: 200px ;
+    height: 100% ;
     width: 100%;
   }
   .Edit {
@@ -140,17 +151,48 @@
     font-size: 15px;
   }
   .file-uploader {
-    width: 50%;
+    width: 100%;
+    padding: 15px;
+    font-size: 10px;
   }
   .nav > li > a {
     padding: 4px 9px;
     margin: 5px 9px;
   }
+  .instructiondiv{
+    flex-direction: column;
+  }
+  .instruction{
+    font-size: 10px;
+  }
+ .img-container {
+  margin-top: 20px ;
+  height: unset;
+ }
+ .instructiondiv{
+  padding:  0 !important;
+ }
+ .instrunctionImg{
+  width: 90vw !important;
+ }
+ .instruction{
+  font-size: 10px !important;
+ }
+ .upload-section{
+  width: 90vw;
+  height: unset;
+  margin: 6px 0 20px 0;
+ }
+ .file-uploader{
+  margin: 0;
+ }
+
 }
 @media (min-width: 520px) and (max-width: 540px) {
   .Questions {
     justify-content: center !important;
   }
+  
 }
 
 @media (min-width: 768px) and (max-width: 912px) {
@@ -167,6 +209,35 @@
   .custom-wrapper h3{
     font-size: 20px;
   }
+  .instructiondiv{
+    padding:  0 !important;
+    flex-direction: column;
+
+   }
+   .instrunctionImg{
+    width: 60% !important;
+   }
+   .instruction{
+    font-size: 10px !important;
+   }
+   .upload-section{
+    width: 43vw;
+        height: unset;
+    margin: 6px 0 20px 0;
+   }
+   .file-uploader{
+    margin: 0;
+   }
+}
+@media (min-width: 1024px) and (max-width: 1230px) {
+  .instructiondiv{
+    padding: 0 !important;
+  }
+  .instrunctionImg{
+    width: unset !important;
+    padding: 19px 40px !important;
+  }
+ 
 }
 
 .clearbutton {
@@ -199,7 +270,7 @@
 
 
 .assigmentHeading{
-  font-family: 'Poppins', sans-serif !important;
+  /* font-family: 'Poppins', sans-serif !important; */
 
 }
 .blurimg{
@@ -207,6 +278,16 @@
 }
 .errormsg{
   padding: 10px 0;
+}
+.instrunctionImg{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 9px 17px;
+    flex-direction: column;
+    /* border: 1px solid; */
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    padding: 19px 40px;
 }
 /* style for iphone 11*/
 .iphonestyle{
@@ -217,4 +298,16 @@
 }
 .img-container2{
   height: 300px;
+}
+.instructiondiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.instruction{
+  margin-bottom: 0;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
 }

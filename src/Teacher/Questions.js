@@ -4,6 +4,7 @@ export default function Questions({
   questionDetails,
   tmQuestion,
   setTmQuestion,
+  resultDivRef
 }) {
   const arr = ["A", "B", "C", "D"];
 
@@ -24,7 +25,7 @@ export default function Questions({
 
   return (
     <>
-      {tmQuestion.length > 0 && (
+      {tmQuestion?.length > 0 && (
         <div className="form-container">
           <div
             style={{

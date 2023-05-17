@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import "./css/Scan.css";
@@ -60,6 +60,17 @@ export default function Scan() {
   //     done(dest);
   //   });
   // };
+  const resultDivRef = useRef(null);
+
+  useEffect(() => {
+    // Scroll to the result div
+    if (resultDivRef.current && respons?.status == 200) {
+      // resultDivRef.current.scrollIntoView({ behavior: 'smooth' });
+      const headerHeight = 90; // Height of the sticky header in pixels
+      const offset = resultDivRef.current.offsetTop - headerHeight;
+      window.scrollTo({ top: offset, behavior: "smooth" });
+    }
+  }, [respons]);
 
   const onDrop = useCallback(
     async (acceptedFiles) => {
@@ -277,7 +288,6 @@ export default function Scan() {
                 <option value={1}>Template-1 </option>
                 <option value={2}>Template-2 </option>
               </select>
-              <br />
             </div>
           </div>
           {/* {loading && (
@@ -296,11 +306,9 @@ export default function Scan() {
                   display: "flex",
                   justifyContent: "center",
                 }}
-                className={`${isIphone11 && "iphonestyle"}`}
+                className="iphonestyle"
               >
-                <div
-                  className={`img-container  ${isIphone11 && "img-container2"}`}
-                >
+                <div className={`img-container   img-container2}`}>
                   <button
                     onClick={handleClear}
                     className={`clearbutton ${loading && "clearbutton2"}`}
@@ -310,9 +318,9 @@ export default function Scan() {
                   <img
                     src={file}
                     alt="Selected file"
-                    className={`EditImg ${loading && "blurimg"} ${
-                      isIphone11 && "Editimg2"
-                    }`}
+                    className={`EditImg ${loading && "blurimg"}
+                       Editimg2
+                    `}
                   />
                 </div>
                 {loading && (
@@ -326,26 +334,57 @@ export default function Scan() {
               </div>
             ) : null}
           </div>
-          <div className="upload-section">
-            {/* <div><Puff type="ThreeDots" color="white" height={80} width={80} /></div> */}
-            {!file && (
+          {!file && (
+          <div
+            style={{
+              display: " flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              padding:'0 70px'
+            }}
+            className="instructiondiv"
+          >
               <div
-                className={`file-uploader ${isDragActive ? "drag-active" : ""}`}
-                {...getRootProps()}
+               
+                className="instrunctionImg"
               >
-                {/* <Puff type="ThreeDots" color="#00BFFF" height={80} width={80} /> */}
-                <input
-                  {...getInputProps({
-                    capture: "environment",
-                  })}
-                />
-                <p>Click to scan a file</p>
+              
+                <img src="./sample.jpg" height={170} />
+                <p
+                  className="text-primary instruction"
+                >
+                  <span style={{ fontWeight: 700 }}>Instructions : </span>
+                  Position the phone correctly straight <br />
+                  and around the dotted lines as shown, and take the picture.
+                </p>
               </div>
-            )}
-            {/* {
+            
+            <div className="upload-section">
+              {/* <div><Puff type="ThreeDots" color="white" height={80} width={80} /></div> */}
+              {!file && (
+                <>
+                  <div
+                    className={`file-uploader ${
+                      isDragActive ? "drag-active" : ""
+                    }`}
+                    {...getRootProps()}
+                  >
+                    {/* <Puff type="ThreeDots" color="#00BFFF" height={80} width={80} /> */}
+                    <input
+                      {...getInputProps({
+                        capture: "environment",
+                      })}
+                    />
+                    <p>Click to scan a file</p>
+                  </div>
+                </>
+              )}
+
+              {/* {
               file ? <div className="img-container" >
                 <img src={file} alt="Selected file" /> */}
-            {/* <button style={{ textAlign: "right", display: "block", margin: "16px" }}
+              {/* <button style={{ textAlign: "right", display: "block", margin: "16px" }}
                   onClick={() =>
                     editImage(file, (output) => {
                       postData(output)
@@ -356,10 +395,14 @@ export default function Scan() {
                 >
                   Edit
                 </button> */}
-            {/* </div> : null
+              {/* </div> : null
             } */}
+            </div>
           </div>
+          )}
+
           <div
+            ref={resultDivRef}
             style={{
               display: "flex",
               justifyContent: "center",
@@ -374,6 +417,7 @@ export default function Scan() {
                   questionDetails={questiondetails}
                   tmQuestion={tmQuestion}
                   setTmQuestion={setTmQuestion}
+                  resultDivRef={resultDivRef}
                 />
 
                 {/* <div className="submit">
@@ -381,7 +425,7 @@ export default function Scan() {
                 </div> */}
               </>
             )}
-            {tmQuestion.length > 0 && (
+            {tmQuestion?.length > 0 && (
               <div className="submit">
                 <button onClick={handleSubmit} className="bg-primary">
                   Submit
