@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function Questions({
   questionDetails,
   tmQuestion,
   setTmQuestion,
-  resultDivRef
+  template,
 }) {
   const arr = ["A", "B", "C", "D"];
+  const arr2 = ["0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4"];
+  const valueToAdd = "Not answered";
+
+  if (!arr.includes(valueToAdd)) {
+    arr.push(valueToAdd);
+  }
+  if (!arr2.includes(valueToAdd)) {
+    arr2.push(valueToAdd);
+  }
+  
 
   const handleOptionChange = (e, questionId) => {
     const newAnswer = e.target.value;
@@ -20,8 +30,6 @@ export default function Questions({
       })
     );
   };
-
- 
 
   return (
     <>
@@ -71,17 +79,30 @@ export default function Questions({
                       {" "}
                       {items.answer_select}
                     </option>
-                    {arr.map((item) => {
-                      if (item !== items.answer_select) {
-                        return (
-                          <option key={item} value={item}>
-                            {" "}
-                            {item}
-                          </option>
-                        );
-                      }
-                      return null;
-                    })}
+                    {template === 1 &&
+                      arr.map((item) => {
+                        if (item !== items.answer_select) {
+                          return (
+                            <option key={item} value={item}>
+                              {" "}
+                              {item}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
+                       {template === 2 &&
+                      arr2.map((item) => {
+                        if (item !== items.answer_select) {
+                          return (
+                            <option key={item} value={item}>
+                              {" "}
+                              {item}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
                   </select>
                 </div>
               ))}

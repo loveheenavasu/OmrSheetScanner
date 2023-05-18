@@ -5,7 +5,6 @@ import "./css/Scan.css";
 import Questions from "./Questions";
 import { useDropzone } from "react-dropzone";
 import "./Pintura/pintura.css";
-import { openDefaultEditor } from "./Pintura/pintura";
 import Spinner from "../Spinner";
 import "../Spinner.css";
 
@@ -20,20 +19,20 @@ export default function Scan() {
   const [template, setTemplate] = useState(null);
   const [studentId, setStudentId] = useState(200);
   const [assignmentId, setAssignmentId] = useState(100);
-  const [isIphone11, setIsIphone11] = useState(false);
 
-  useEffect(() => {
-    const { height, width } = window.screen;
+// useEffect(() => {
+//  if(template === 1){
+//   console.log('111111')
+//  }
+//  else {
+//   console.log('222')
+//  }
+//  else{
+//   console.log(template)
+//  }
 
-    // iPhone 11 has a screen size of 828x1792 in portrait mode
-    if (height === 896 && width === 414) {
-      setIsIphone11(true);
-    }
-  }, []);
+// }, [template])
 
-  // if (isIphone11) {
-  //   require('./css/iphone11.css');
-  // }
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
   };
@@ -131,7 +130,7 @@ export default function Scan() {
         tm_image: respons?.tm_image,
       };
 
-      const secondApiResponse = await fetch(
+      await fetch(
         "https://dev-app.tabbiemath.com/tabbiedevapi/public/api/scanapistore",
         {
           method: "POST",
@@ -141,7 +140,6 @@ export default function Scan() {
           },
         }
       );
-      const secondApiData = await secondApiResponse.json();
       const { assignment_id, student_id, template_id } =
         respons?.data?.tm_schoolhomework;
 
@@ -150,31 +148,7 @@ export default function Scan() {
     }
   };
 
-  const postData = async (pic) => {
-    // const formData = new FormData();
-    // formData.append("template_image", pic);
-    // formData.append("token", 'a99442d2a736365f5fe637e299b0e339');
-    // formData.append("template_id", template);
-    // try {
-    //   setLoading(true);
-    //   const response = await fetch("https://dev.zestgeek.com/OMRScanning/public/api/image-upload", {
-    //     method: "POST",
-    //     body: formData
-    //   })
-    //   const data = response.json()
-    //   data.then((res) => {
-    //     if (res?.data)
-    //       setShowForm(true)
-    //     setTmQuestion(res?.data?.tm_question)
-    //     setQuestiondetails(res?.data?.tm_schoolhomework)
-    //     setLoading(false);
-    //   })
-    //   // setShowForm(true);
-    //   setLoading(false);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-  };
+  
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone(
     window?.innerWidth > 768
@@ -290,11 +264,7 @@ export default function Scan() {
               </select>
             </div>
           </div>
-          {/* {loading && (
-            <div className="pos-center">
-              <Spinner />
-            </div>
-          )} */}
+         
           <div
             style={{ display: "flex", justifyContent: "center" }}
             className="EditMain"
@@ -311,7 +281,7 @@ export default function Scan() {
                 <div className={`img-container   img-container2}`}>
                   <button
                     onClick={handleClear}
-                    className={`clearbutton ${loading && "clearbutton2"}`}
+                    className={`bg-primary clearbutton ${loading && "clearbutton2"}`}
                   >
                     X
                   </button>
@@ -335,56 +305,50 @@ export default function Scan() {
             ) : null}
           </div>
           {!file && (
-          <div
-            style={{
-              display: " flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              padding:'0 70px'
-            }}
-            className="instructiondiv"
-          >
-              <div
-               
-                className="instrunctionImg"
-              >
-              
+            <div
+              style={{
+                display: " flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                padding: "0 70px",
+              }}
+              className="instructiondiv"
+            >
+              <div className="instrunctionImg">
                 <img src="./sample.jpg" height={170} />
-                <p
-                  className="text-primary instruction"
-                >
+                <p className="text-primary instruction">
                   <span style={{ fontWeight: 700 }}>Instructions : </span>
                   Position the phone correctly straight <br />
                   and around the dotted lines as shown, and take the picture.
                 </p>
               </div>
-            
-            <div className="upload-section">
-              {/* <div><Puff type="ThreeDots" color="white" height={80} width={80} /></div> */}
-              {!file && (
-                <>
-                  <div
-                    className={`file-uploader ${
-                      isDragActive ? "drag-active" : ""
-                    }`}
-                    {...getRootProps()}
-                  >
-                    {/* <Puff type="ThreeDots" color="#00BFFF" height={80} width={80} /> */}
-                    <input
-                      {...getInputProps({
-                        capture: "environment",
-                      })}
-                    />
-                    <p>Click to scan a file</p>
-                  </div>
-                </>
-              )}
 
-              {/* {
+              <div className="upload-section">
+                {/* <div><Puff type="ThreeDots" color="white" height={80} width={80} /></div> */}
+                {!file && (
+                  <>
+                    <div
+                      className={`file-uploader ${
+                        isDragActive ? "drag-active" : ""
+                      }`}
+                      {...getRootProps()}
+                    >
+                      {/* <Puff type="ThreeDots" color="#00BFFF" height={80} width={80} /> */}
+                      <input
+                        {...getInputProps({
+                          capture: "environment",
+                        })}
+                      />
+                      <p>Click to scan a file</p>
+                    </div>
+                  </>
+                )}
+
+                {/* {
               file ? <div className="img-container" >
                 <img src={file} alt="Selected file" /> */}
-              {/* <button style={{ textAlign: "right", display: "block", margin: "16px" }}
+                {/* <button style={{ textAlign: "right", display: "block", margin: "16px" }}
                   onClick={() =>
                     editImage(file, (output) => {
                       postData(output)
@@ -395,10 +359,10 @@ export default function Scan() {
                 >
                   Edit
                 </button> */}
-              {/* </div> : null
+                {/* </div> : null
             } */}
+              </div>
             </div>
-          </div>
           )}
 
           <div
@@ -418,6 +382,7 @@ export default function Scan() {
                   tmQuestion={tmQuestion}
                   setTmQuestion={setTmQuestion}
                   resultDivRef={resultDivRef}
+                  template={template}
                 />
 
                 {/* <div className="submit">
