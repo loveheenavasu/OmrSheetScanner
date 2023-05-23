@@ -4,7 +4,6 @@ import Header from "./Header";
 import "./css/Scan.css";
 import Questions from "./Questions";
 import { useDropzone } from "react-dropzone";
-import "./Pintura/pintura.css";
 import Spinner from "../Spinner";
 import "../Spinner.css";
 
@@ -13,25 +12,18 @@ export default function Scan() {
 
   const [tmQuestion, setTmQuestion] = useState([]);
   const [questiondetails, setQuestiondetails] = useState({});
-  // console.log(tmQuestion, "tmQuestion");
   const [loading, setLoading] = useState(false);
   const [respons, setRespons] = useState(null);
   const [template, setTemplate] = useState(null);
   const [studentId, setStudentId] = useState(200);
   const [assignmentId, setAssignmentId] = useState(100);
 
-// useEffect(() => {
-//  if(template === 1){
-//   console.log('111111')
-//  }
-//  else {
-//   console.log('222')
-//  }
-//  else{
-//   console.log(template)
-//  }
 
-// }, [template])
+  const assignment1QueID= [123, 124,125, 126, 127, 131,132, 133 ,134, 220,221, 222,223, 224,225]
+  const assignment2QueID= [323, 324,325, 326, 327, 431,432, 433 ,434, 520,521, 522,523, 524,525]
+  const assignment3QueID= [623, 624,625, 626, 627, 731,732, 733 ,734, 820,921, 922,923, 924,925 ]
+
+
 
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
@@ -63,8 +55,7 @@ export default function Scan() {
 
   useEffect(() => {
     // Scroll to the result div
-    if (resultDivRef.current && respons?.status == 200) {
-      // resultDivRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (resultDivRef.current && respons?.status === 200) {
       const headerHeight = 90; // Height of the sticky header in pixels
       const offset = resultDivRef.current.offsetTop - headerHeight;
       window.scrollTo({ top: offset, behavior: "smooth" });
@@ -89,6 +80,17 @@ export default function Scan() {
       formData.append("template_id", template);
       formData.append("student_id", studentId);
       formData.append("assignment_id", assignmentId);
+      if (assignmentId ==100) {
+        formData.append("assignmentQueIDs", assignment1QueID.join(','));
+      } else if (assignmentId == 101) {
+        formData.append("assignmentQueIDs", assignment2QueID.join(','));
+      } 
+      else{
+        formData.append("assignmentQueIDs", assignment3QueID.join(','));
+
+      }      
+    
+
 
       try {
         setLoading(true);
@@ -100,13 +102,12 @@ export default function Scan() {
           }
         );
         const data = await response.json();
+        console.log(data,"data")
         const blob = new Blob([acceptedFiles[0]], {
           type: acceptedFiles[0].type,
         });
         const url = URL.createObjectURL(blob);
-
         setFile(url);
-
         setTmQuestion(data?.data?.tm_question);
         setQuestiondetails(data?.data?.tm_schoolhomework);
         setLoading(false);
@@ -148,8 +149,6 @@ export default function Scan() {
     }
   };
 
-  
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone(
     window?.innerWidth > 768
       ? {
@@ -173,27 +172,21 @@ export default function Scan() {
 
   return (
     <div class="container-wrapper">
+
       <Header />
-      <div
-        id="wrapper"
-        style={
-          {
-            // height: '100vh'
-          }
-        }
-      >
+      <div id="wrapper">
         <div className="left-cls">
           <Sidebar />
         </div>
         <section
           className="custom-wrapper"
           style={{
-            // marginTop: "122px",
             display: "flex",
             flexDirection: "column",
             height: "100%",
           }}
         >
+          
           <div className="scanner">
             <b
               style={{ fontSize: "27px", textAlign: "center" }}
@@ -264,7 +257,7 @@ export default function Scan() {
               </select>
             </div>
           </div>
-         
+
           <div
             style={{ display: "flex", justifyContent: "center" }}
             className="EditMain"
@@ -281,7 +274,9 @@ export default function Scan() {
                 <div className={`img-container   img-container2}`}>
                   <button
                     onClick={handleClear}
-                    className={`bg-primary clearbutton ${loading && "clearbutton2"}`}
+                    className={`bg-primary clearbutton ${
+                      loading && "clearbutton2"
+                    }`}
                   >
                     X
                   </button>
@@ -316,7 +311,7 @@ export default function Scan() {
               className="instructiondiv"
             >
               <div className="instrunctionImg">
-                <img src="./sample.jpg" height={170} />
+                <img src="./sample.jpg" height={170} alt="" />
                 <p className="text-primary instruction">
                   <span style={{ fontWeight: 700 }}>Instructions : </span>
                   Position the phone correctly straight <br />
@@ -325,7 +320,6 @@ export default function Scan() {
               </div>
 
               <div className="upload-section">
-                {/* <div><Puff type="ThreeDots" color="white" height={80} width={80} /></div> */}
                 {!file && (
                   <>
                     <div
@@ -334,7 +328,6 @@ export default function Scan() {
                       }`}
                       {...getRootProps()}
                     >
-                      {/* <Puff type="ThreeDots" color="#00BFFF" height={80} width={80} /> */}
                       <input
                         {...getInputProps({
                           capture: "environment",
@@ -384,10 +377,6 @@ export default function Scan() {
                   resultDivRef={resultDivRef}
                   template={template}
                 />
-
-                {/* <div className="submit">
-                  <button onClick={handleSubmit} >Submit</button>
-                </div> */}
               </>
             )}
             {tmQuestion?.length > 0 && (
@@ -397,19 +386,17 @@ export default function Scan() {
                 </button>
               </div>
             )}
-            {respons?.status == 500 && (
+            {respons?.status === 500 && (
               <p style={{ color: "red" }} className="errormsg">
                 {respons?.msg}
               </p>
             )}
-            {/* {  respons?.status == 500 && tmQuestion.length < 0 && (
-                <p style={{ color: "red" }} className="errormsg">
-                  {respons?.msg}
-                </p>
-              )} */}
           </div>
         </section>
       </div>
     </div>
   );
 }
+
+
+
