@@ -10,12 +10,12 @@ export default function Header() {
 
     <div style={{ display: "flex" }} className="header-logo" >
             
-              <img src={logo} />
+              <img src={logo} alt="Main Logo"/>
       </div>     
-    <ul class="nav navbar-right top-nav" id="yw0">
+    <ul className="nav navbar-right top-nav" id="yw0">
     <>
                 <li>
-                  <a >Home</a>
+                  <a>Home</a>
                 </li>
                 </>
                 </ul>

@@ -7,9 +7,18 @@ import { useDropzone } from "react-dropzone";
 import Spinner from "../Spinner";
 import "../Spinner.css";
 
+const assignment1QueID = [
+  12311, 12412, 12513, 12614, 12715, 13116, 132, 133, 134, 220, 221, 222, 223, 224, 225,
+];
+const assignment2QueID = [
+  323, 324, 325, 326, 327, 431, 432, 433, 434, 520, 521, 522, 523, 524, 525,
+];
+const assignment3QueID = [
+  623, 624, 625, 626, 627, 731, 732, 733, 734, 820, 921, 922, 923, 924, 925,
+];
+
 export default function Scan() {
   const [file, setFile] = useState(null);
-
   const [tmQuestion, setTmQuestion] = useState([]);
   const [questiondetails, setQuestiondetails] = useState({});
   const [loading, setLoading] = useState(false);
@@ -17,13 +26,6 @@ export default function Scan() {
   const [template, setTemplate] = useState(null);
   const [studentId, setStudentId] = useState(200);
   const [assignmentId, setAssignmentId] = useState(100);
-
-
-  const assignment1QueID= [123, 124,125, 126, 127, 131,132, 133 ,134, 220,221, 222,223, 224,225]
-  const assignment2QueID= [323, 324,325, 326, 327, 431,432, 433 ,434, 520,521, 522,523, 524,525]
-  const assignment3QueID= [623, 624,625, 626, 627, 731,732, 733 ,734, 820,921, 922,923, 924,925 ]
-
-
 
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
@@ -33,7 +35,7 @@ export default function Scan() {
   };
 
   const handleAssigmentChange = (e) => {
-    setAssignmentId(e.target.value);
+    setAssignmentId(Number(e.target.value));
   };
 
   // const editImage = (image, done) => {
@@ -61,6 +63,7 @@ export default function Scan() {
       window.scrollTo({ top: offset, behavior: "smooth" });
     }
   }, [respons]);
+ 
 
   const onDrop = useCallback(
     async (acceptedFiles) => {
@@ -80,18 +83,14 @@ export default function Scan() {
       formData.append("template_id", template);
       formData.append("student_id", studentId);
       formData.append("assignment_id", assignmentId);
-      if (assignmentId ==100) {
-        formData.append("assignmentQueIDs", assignment1QueID.join(','));
-      } else if (assignmentId == 101) {
-        formData.append("assignmentQueIDs", assignment2QueID.join(','));
-      } 
-      else{
-        formData.append("assignmentQueIDs", assignment3QueID.join(','));
-
-      }      
-    
-
-
+      if (assignmentId === 100) {
+        formData.append("assignmentQueIDs", assignment1QueID.join(","));
+      } else if (assignmentId === 101) {
+        formData.append("assignmentQueIDs", assignment2QueID.join(","));
+      } else {
+        formData.append("assignmentQueIDs", assignment3QueID.join(","));
+      }
+      
       try {
         setLoading(true);
         const response = await fetch(
@@ -102,7 +101,6 @@ export default function Scan() {
           }
         );
         const data = await response.json();
-        console.log(data,"data")
         const blob = new Blob([acceptedFiles[0]], {
           type: acceptedFiles[0].type,
         });
@@ -171,8 +169,7 @@ export default function Scan() {
   };
 
   return (
-    <div class="container-wrapper">
-
+    <div className="container-wrapper">
       <Header />
       <div id="wrapper">
         <div className="left-cls">
@@ -186,7 +183,6 @@ export default function Scan() {
             height: "100%",
           }}
         >
-          
           <div className="scanner">
             <b
               style={{ fontSize: "27px", textAlign: "center" }}
@@ -397,6 +393,3 @@ export default function Scan() {
     </div>
   );
 }
-
-
-
