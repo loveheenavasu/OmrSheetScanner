@@ -8,7 +8,8 @@ import Spinner from "../Spinner";
 import "../Spinner.css";
 
 const assignment1QueID = [
-  12311, 12412, 12513, 12614, 12715, 13116, 132, 133, 134, 220, 221, 222, 223, 224, 225,
+  12311, 12412, 12513, 12614, 12715, 13116, 132, 133, 134, 220, 221, 222, 223,
+  224, 225,
 ];
 const assignment2QueID = [
   323, 324, 325, 326, 327, 431, 432, 433, 434, 520, 521, 522, 523, 524, 525,
@@ -26,6 +27,7 @@ export default function Scan() {
   const [template, setTemplate] = useState(null);
   const [studentId, setStudentId] = useState(200);
   const [assignmentId, setAssignmentId] = useState(100);
+  let isIphone = false
 
   const onChangeTemplate = (e) => {
     setTemplate(Number(e.target.value));
@@ -63,7 +65,7 @@ export default function Scan() {
       window.scrollTo({ top: offset, behavior: "smooth" });
     }
   }, [respons]);
- 
+
 
   const onDrop = useCallback(
     async (acceptedFiles) => {
@@ -90,7 +92,12 @@ export default function Scan() {
       } else {
         formData.append("assignmentQueIDs", assignment3QueID.join(","));
       }
-      
+
+      if (/iPhone/i.test(navigator.userAgent && window?.innerWidth <= 768)) {
+        isIphone = true
+      }
+      formData.append("isIpone", isIphone);
+
       try {
         setLoading(true);
         const response = await fetch(
@@ -295,6 +302,7 @@ export default function Scan() {
               </div>
             ) : null}
           </div>
+      
           {!file && (
             <div
               style={{
@@ -387,6 +395,7 @@ export default function Scan() {
                 {respons?.msg}
               </p>
             )}
+          
           </div>
         </section>
       </div>
