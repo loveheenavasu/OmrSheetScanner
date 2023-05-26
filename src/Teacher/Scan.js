@@ -57,7 +57,6 @@ export default function Scan() {
   // };
   const resultDivRef = useRef(null);
 
-  console.log(navigator.userAgent, "useragent")
 
   useEffect(() => {
     // Scroll to the result div
