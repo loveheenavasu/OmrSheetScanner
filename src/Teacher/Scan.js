@@ -57,6 +57,8 @@ export default function Scan() {
   // };
   const resultDivRef = useRef(null);
 
+  console.log(navigator.userAgent, "useragent")
+
   useEffect(() => {
     // Scroll to the result div
     if (resultDivRef.current && respons?.status === 200) {
@@ -93,10 +95,10 @@ export default function Scan() {
         formData.append("assignmentQueIDs", assignment3QueID.join(","));
       }
 
-      if (/iPhone/i.test(navigator.userAgent && window?.innerWidth <= 768)) {
+      if (/iPhone/i.test(navigator.userAgent) && window?.innerWidth <= 768) {
         isIphone = true
       }
-      formData.append("isIpone", isIphone);
+      formData.append("isPhone", isIphone);
 
       try {
         setLoading(true);
